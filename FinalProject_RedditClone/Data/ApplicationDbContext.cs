@@ -1,6 +1,7 @@
 ﻿using FinalProject_RedditClone.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using FinalProject_RedditClone.Models;
 
 namespace FinalProject_RedditClone.Data
 {
