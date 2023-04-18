@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using FinalProject_RedditClone.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using FinalProject_RedditClone.Models;
 
@@ -10,6 +11,7 @@ namespace FinalProject_RedditClone.Data
             : base(options)
         {
         }
-        public DbSet<FinalProject_RedditClone.Models.Posts>? Posts { get; set; }
+
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     }
 }
