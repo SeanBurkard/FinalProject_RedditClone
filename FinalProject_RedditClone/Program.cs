@@ -1,4 +1,6 @@
 using FinalProject_RedditClone.Data;
+using FinalProject_RedditClone.Repositories;
+using FinalProject_RedditClone.Utility.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +22,8 @@ namespace FinalProject_RedditClone
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
+
+            AddScoped();
 
             var app = builder.Build();
 
@@ -49,6 +53,13 @@ namespace FinalProject_RedditClone
             app.MapRazorPages();
 
             app.Run();
+
+            void AddScoped()
+            {
+                builder.Services.AddScoped<IUserRepository, UserRepository>();
+                builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+                builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            }
         }
     }
 }

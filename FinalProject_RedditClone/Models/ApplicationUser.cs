@@ -11,4 +11,9 @@ namespace FinalProject_RedditClone.Models
         public string State { get; set; }
         public string Bio { get; set; }
     }
+
+    public class ApplicationRole : IdentityRole 
+    {
+    
+    }
 }
