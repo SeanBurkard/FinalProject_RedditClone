@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinalProject_RedditClone.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AppRolesController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -11,6 +13,8 @@ namespace FinalProject_RedditClone.Controllers
         {
             _roleManager = roleManager;
         }
+
+        
         public IActionResult Index()
         {
             var roles = _roleManager.Roles;

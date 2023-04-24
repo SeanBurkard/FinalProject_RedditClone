@@ -13,5 +13,6 @@ namespace FinalProject_RedditClone.Data
         }
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Posts> Posts { get; set; }
     }
 }
