@@ -45,10 +45,11 @@
                             </div>
                         </div>
                         <div class="col-lg-4 col-xs-12 col-sm-5 col-md-4 avt">
-                            <div class="stnt pull-left">                            
-                                <form action="03_new_topic.html" method="post" class="form">
+                            <div class="stnt pull-left">
+                                @*<form asp-area="" asp-controller="Posts" asp-action="Create">
                                     <button class="btn btn-primary">Start New Topic</button>
-                                </form>
+                                </form>*@
+                                <a asp-controller="Posts" asp-action="Create">Create New</a>
                             </div>
                             <div class="env pull-left"><i class="fa fa-envelope"></i></div>
 
