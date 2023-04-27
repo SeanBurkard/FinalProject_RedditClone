@@ -4,5 +4,6 @@
     {
         IUserRepository User { get; }
         IRoleRepository Role { get; }
+        IPostsRepository Posts { get; }
     }
 }
