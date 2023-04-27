@@ -44,14 +44,15 @@ namespace FinalProject_RedditClone.Controllers
             var vm = new EditUserVM
             {
                 User = user,
-                Roles = roleItems
+                Roles = roleItems,
+                ProfilePicture = null
             };
 
             return View(vm);
         }
 
         [HttpPost]
-        public async Task<IActionResult> OnPostAsync(EditUserVM data)
+        public async Task<IActionResult> OnPostAsync(EditUserVM data, IFormFile ProfilePicture)
         {
             var user = _unitOfWork.User.GetUser(data.User.Id);
             if (user == null)
@@ -60,11 +61,6 @@ namespace FinalProject_RedditClone.Controllers
             }
 
             var userRolesInDb = await _signInManager.UserManager.GetRolesAsync(user);
-
-            //Loop through the roles in ViewModel
-            //Check if the Role is Assigned In DB
-            //If Assigned -> Do Nothing
-            //If Not Assigned -> Add Role
 
             var rolesToAdd = new List<string>();
             var rolesToDelete = new List<string>();
@@ -101,10 +97,30 @@ namespace FinalProject_RedditClone.Controllers
             user.FirstName = data.User.FirstName;
             user.LastName = data.User.LastName;
             user.Email = data.User.Email;
+            user.PhoneNumber = data.User.PhoneNumber;
+
+            if(data.ProfilePicture != null && data.ProfilePicture.Length > 0)
+            {
+                var memoryStream = new MemoryStream();
+                await data.ProfilePicture.CopyToAsync(memoryStream);
+                user.ProfilePicture = memoryStream.ToArray();
+            }
 
             _unitOfWork.User.UpdateUser(user);
 
             return RedirectToAction("Edit", new { id = user.Id });
+        }
+
+        public async Task<IActionResult> GetProfilePicture(string id)
+        {
+            var user =  _unitOfWork.User.GetUser(id);
+            if(user == null)
+            {
+                return NotFound();
+            }
+
+            var imgData = user.ProfilePicture;
+            return File(imgData, "image/jpg");
         }
 
     }

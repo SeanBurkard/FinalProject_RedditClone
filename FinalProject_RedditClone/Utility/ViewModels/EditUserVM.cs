@@ -8,5 +8,6 @@ namespace FinalProject_RedditClone.Utility.ViewModels
     {
         public ApplicationUser User { get; set; }
         public IList<SelectListItem> Roles { get; set; }
+        public IFormFile ProfilePicture { get; set; }
     }
 }

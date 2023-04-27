@@ -10,6 +10,7 @@ namespace FinalProject_RedditClone.Models
         public string LastName { get; set; }
         public string State { get; set; }
         public string Bio { get; set; }
+        public byte[]? ProfilePicture { get; set; }
     }
 
     public class ApplicationRole : IdentityRole 
