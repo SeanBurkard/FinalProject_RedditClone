@@ -52,7 +52,7 @@ namespace FinalProject_RedditClone.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> OnPostAsync(EditUserVM data, IFormFile ProfilePicture)
+        public async Task<IActionResult> OnPostAsync(EditUserVM data)
         {
             var user = _unitOfWork.User.GetUser(data.User.Id);
             if (user == null)

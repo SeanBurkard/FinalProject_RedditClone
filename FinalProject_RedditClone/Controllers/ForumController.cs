@@ -7,37 +7,32 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FinalProject_RedditClone.Data;
 using FinalProject_RedditClone.Models;
+using FinalProject_RedditClone.Repositories;
+using FinalProject_RedditClone.Utility.Repositories;
 
 namespace FinalProject_RedditClone.Controllers
 {
     public class ForumController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ForumController(ApplicationDbContext context)
+        public ForumController(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
 
         // GET: Forum
-        public async Task<IActionResult> Index()
+        public  IActionResult Index()
         {
-              return _context.Forum != null ? 
-                          View(await _context.Forum.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Forum'  is null.");
+            var forums = _unitOfWork.Forum.GetAll();
+            return View(forums);
         }
 
         // GET: Forum/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null || _context.Forum == null)
-            {
-                return NotFound();
-            }
-
-            var forum = await _context.Forum
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (forum == null)
+            var forum = _unitOfWork.Forum.GetById(id);
+            if(forum == null)
             {
                 return NotFound();
             }
@@ -56,26 +51,28 @@ namespace FinalProject_RedditClone.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,CreatedAt,UpdatedAt")] Forum forum)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description")] Forum forum)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(forum);
-                await _context.SaveChangesAsync();
+                forum.CreatedAt = DateTime.Now;
+                forum.UpdatedAt = DateTime.Now;
+
+                _unitOfWork.Forum.Add(forum);
                 return RedirectToAction(nameof(Index));
             }
             return View(forum);
         }
 
         // GET: Forum/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null || _context.Forum == null)
+            if (id == null || _unitOfWork.Forum == null)
             {
                 return NotFound();
             }
 
-            var forum = await _context.Forum.FindAsync(id);
+            var forum =  _unitOfWork.Forum.GetById(id);
             if (forum == null)
             {
                 return NotFound();
@@ -88,7 +85,7 @@ namespace FinalProject_RedditClone.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,CreatedAt,UpdatedAt")] Forum forum)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,CreatedAt")] Forum forum)
         {
             if (id != forum.Id)
             {
@@ -99,8 +96,8 @@ namespace FinalProject_RedditClone.Controllers
             {
                 try
                 {
-                    _context.Update(forum);
-                    await _context.SaveChangesAsync();
+                    forum.UpdatedAt = DateTime.Now;
+                    _unitOfWork.Forum.Update(forum);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -119,15 +116,14 @@ namespace FinalProject_RedditClone.Controllers
         }
 
         // GET: Forum/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null || _context.Forum == null)
+            if (id == null || _unitOfWork.Forum == null)
             {
                 return NotFound();
             }
 
-            var forum = await _context.Forum
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var forum = _unitOfWork.Forum.GetById(id);
             if (forum == null)
             {
                 return NotFound();
@@ -141,23 +137,27 @@ namespace FinalProject_RedditClone.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Forum == null)
+            if (_unitOfWork.Forum == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Forum'  is null.");
             }
-            var forum = await _context.Forum.FindAsync(id);
+            var forum =  _unitOfWork.Forum.GetById(id);
             if (forum != null)
             {
-                _context.Forum.Remove(forum);
+                _unitOfWork.Forum.Delete(forum);
             }
-            
-            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
         private bool ForumExists(int id)
         {
-          return (_context.Forum?.Any(e => e.Id == id)).GetValueOrDefault();
+            if(_unitOfWork.Forum.GetById(id) == null)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
