@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinalProject_RedditClone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230428183531_startedOver")]
+    [Migration("20230430172343_startedOver")]
     partial class startedOver
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -65,7 +65,10 @@ namespace FinalProject_RedditClone.Migrations
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("SubforumId")
+                    b.Property<int>("ForumId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubforumId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -78,6 +81,8 @@ namespace FinalProject_RedditClone.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ForumId");
 
                     b.ToTable("Posts");
                 });
@@ -310,6 +315,17 @@ namespace FinalProject_RedditClone.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
+            modelBuilder.Entity("FinalProject_RedditClone.Models.Posts", b =>
+                {
+                    b.HasOne("FinalProject_RedditClone.Models.Forum", "Forum")
+                        .WithMany()
+                        .HasForeignKey("ForumId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Forum");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
