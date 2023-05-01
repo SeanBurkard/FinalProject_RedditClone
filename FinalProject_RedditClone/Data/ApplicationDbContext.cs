@@ -14,6 +14,6 @@ namespace FinalProject_RedditClone.Data
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Posts> Posts { get; set; }
-        public DbSet<FinalProject_RedditClone.Models.Forum>? Forum { get; set; }
+        public DbSet<Forum> Forum { get; set; }
     }
 }
