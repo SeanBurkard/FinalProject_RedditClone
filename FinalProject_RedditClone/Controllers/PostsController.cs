@@ -45,41 +45,21 @@ namespace FinalProject_RedditClone.Controllers
             return View();
         }
 
-        // * Original Posts Create, copy pasted below to tweak with *
-        /*// POST: Posts/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Content,UserId,SubforumId,CreatedAt,UpdatedAt")] Posts posts)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(posts);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(posts);
-        }*/
-
         // POST: Posts/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Content,UserId,SubforumId")] Posts posts)
-        {
-            if (ModelState.IsValid)
-            {
-                posts.CreatedAt= DateTime.Now;
-                posts.UpdatedAt= DateTime.Now;
-
-                _unitOfWork.Posts.Add(posts);
-                //await _unitOfWork.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(posts);
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("Id,Title,Content,UserId,SubforumId,CreatedAt,UpdatedAt")] Posts posts)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Add(posts);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(posts);
+        //}
 
         //// GET: Posts/Edit/5
         //public async Task<IActionResult> Edit(int? id)
