@@ -31,11 +31,11 @@
                                             Profile
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a asp-controller="Posts" asp-action="Create">New Post</a></li>
                                             <li><a class="dropdown-item" href="#">View Profile</a></li>
-                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
                                             <li><hr class="dropdown-divider"></li>
-                                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                                            <li>
+                                                <a asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">Logout</a>
+                                            </li>
                                         </ul>
                                     </div>
                                 }
@@ -43,14 +43,15 @@
                                 {
                                     <div class="stnt pull-left">
                                         <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Profile
+                                            Login
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a asp-controller="Posts" asp-action="Create">New Post</a></li>
-                                            <li><a class="dropdown-item" href="#">View Profile</a></li>
-                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                            <li><hr class="dropdown-divider"></li>
-                                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                                            <li class="nav-item">
+                                                <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                                            </li>
                                         </ul>
                                     </div>
                                 }
@@ -60,49 +61,42 @@
                     </div>
                 </div>
             </div>
+            <br/>
 
-
-            @*<section class="content">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-8 col-xs-12 col-md-8">
-                            <div class="pull-left"><a href="#" class="prevnext"><i class="fa fa-angle-left"></i></a></div>
-                            <div class="pull-left">
-                                <ul class="paginationforum">
-                                    <li class="hidden-xs"><a href="#">1</a></li>
-                                    <li class="hidden-xs"><a href="#">2</a></li>
-                                    <li class="hidden-xs"><a href="#">3</a></li>
-                                    <li class="hidden-xs"><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li><a href="#">6</a></li>
-                                    <li><a href="#" class="active">7</a></li>
-                                    <li><a href="#">8</a></li>
-                                    <li class="hidden-xs"><a href="#">9</a></li>
-                                    <li class="hidden-xs"><a href="#">10</a></li>
-                                    <li class="hidden-xs hidden-md"><a href="#">11</a></li>
-                                    <li class="hidden-xs hidden-md"><a href="#">12</a></li>
-                                    <li class="hidden-xs hidden-sm hidden-md"><a href="#">13</a></li>
-                                    <li><a href="#">1586</a></li>
-                                </ul>
-                            </div>
-                            <div class="pull-left"><a href="#" class="prevnext last"><i class="fa fa-angle-right"></i></a></div>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                </div>*@
-                <br/>
+            @if (User.Identity.IsAuthenticated)
+            {
                 <div class="container">
                     <div class="row pull-left">
                         <div class="col">
-                            <button class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Make a Post</button>
+                            <form>
+                                <button class="btn btn-primary" asp-controller="Posts" asp-action="Create">New Post</button>
+                            </form>
                         </div>
                         <div class="col">
-                            <button class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Make a Post</button>
+                            <form>
+                                <button class="btn btn-primary" asp-controller="Forum" asp-action="Create">New Forum</button>
+                            </form>
                         </div>
+                        
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <div class="col">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Admin
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item"><a class="dropdown-item" asp-area="" asp-controller="AppRoles" asp-action="Index">Roles</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" asp-area="" asp-controller="User" asp-action="Index">Users</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" asp-area="" asp-controller="Forum" asp-action="Index">Forums</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" asp-area="" asp-controller="Posts" asp-action="Index">Posts</a></li>
+                                </ul>
+                            </div>
+                        }
                     </div>
                 </div>
-                <br/>
-
+                <br />
+            }
+        
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-8 col-md-8">

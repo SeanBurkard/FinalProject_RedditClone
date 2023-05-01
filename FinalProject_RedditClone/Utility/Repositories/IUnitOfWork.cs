@@ -7,5 +7,6 @@
         IPostsRepository Posts { get; }
         IForumRepository Forum { get; }
         ICommentRepository Comment { get; }
+        IVoteRepository Vote { get; }
     }
 }
