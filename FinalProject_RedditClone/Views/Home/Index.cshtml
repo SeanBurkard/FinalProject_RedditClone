@@ -10,13 +10,7 @@
                         <div class="col-lg-1 col-xs-3 col-sm-2 col-md-2 logo "><a href="index.html"><img src="images/logo.jpg" alt=""  /></a></div>
                         <div class="col-lg-3 col-xs-9 col-sm-5 col-md-3 selecttopic">
                             <div class="dropdown">
-                                <a data-toggle="dropdown" href="#" >Borderlands 2</a> <b class="caret"></b>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Borderlands 1</a></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-2" href="#">Borderlands 2</a></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-3" href="#">Borderlands 3</a></li>
-
-                                </ul>
+                                @*Add forum ddl here*@
                             </div>
                         </div>
                         <div class="col-lg-4 search hidden-xs hidden-sm col-md-3">
@@ -47,13 +41,20 @@
                                 }
                                 else
                                 {
-                                    <form>
-                                        <button class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Make a Post</button>
-                                        @*<button class="btn btn-primary" asp-controller="Posts" asp-action="Create">Make a Post</button>*@
-                                    </form>
+                                    <div class="stnt pull-left">
+                                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Profile
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a asp-controller="Posts" asp-action="Create">New Post</a></li>
+                                            <li><a class="dropdown-item" href="#">View Profile</a></li>
+                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                                        </ul>
+                                    </div>
                                 }
                             </div>
-                            @*<div class="env pull-left"><i class="fa fa-envelope"></i></div>*@
                             <div class="clearfix"></div>
                         </div>
                     </div>
@@ -89,7 +90,18 @@
                         </div>
                     </div>
                 </div>*@
-
+                <br/>
+                <div class="container">
+                    <div class="row pull-left">
+                        <div class="col">
+                            <button class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Make a Post</button>
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Make a Post</button>
+                        </div>
+                    </div>
+                </div>
+                <br/>
 
                 <div class="container">
                     <div class="row">

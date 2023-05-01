@@ -16,5 +16,6 @@ namespace FinalProject_RedditClone.Data
         public DbSet<Posts> Posts { get; set; }
         public DbSet<Forum> Forum { get; set; }
         public DbSet<Comment>? Comment { get; set; }
+        public DbSet<FinalProject_RedditClone.Models.Vote>? Vote { get; set; }
     }
 }
