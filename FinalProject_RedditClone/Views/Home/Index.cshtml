@@ -4,22 +4,6 @@
 
     <body>
         <div class="container-fluid">
-
-            @*<!-- Slider -->
-            <div class="tp-banner-container">
-                <div class="tp-banner" >
-                    <ul>	
-                        <!-- SLIDE  -->
-                        <li data-transition="fade" data-slotamount="7" data-masterspeed="1500" >
-                            <!-- MAIN IMAGE -->
-                            <img src="images/slide2.jpg"  alt="slidebg1"  data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
-                            <!-- LAYERS -->
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <!-- //Slider -->*@
-
             <div class="headernav">
                 <div class="container">
                     <div class="row">
@@ -46,23 +30,30 @@
                         </div>
                         <div class="col-lg-4 col-xs-12 col-sm-5 col-md-4 avt">
                             <div class="stnt pull-left">
-                                <form>
-                                    <button class="btn btn-primary" asp-controller="Posts" asp-action="Create">Start New Topic</button>
-                                </form>
+                                @if(User.Identity.IsAuthenticated)
+                                {
+                                    <div class="stnt pull-left">
+                                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Profile
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a asp-controller="Posts" asp-action="Create">New Post</a></li>
+                                            <li><a class="dropdown-item" href="#">View Profile</a></li>
+                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                                        </ul>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <form>
+                                        <button class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Make a Post</button>
+                                        @*<button class="btn btn-primary" asp-controller="Posts" asp-action="Create">Make a Post</button>*@
+                                    </form>
+                                }
                             </div>
-                            <div class="env pull-left"><i class="fa fa-envelope"></i></div>
-
-                            <div class="avatar pull-left dropdown">
-                                <a data-toggle="dropdown" href="#"><img src="images/avatar.jpg" alt="" /></a> <b class="caret"></b>
-                                <div class="status green">&nbsp;</div>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">My Profile</a></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-2" href="#">Inbox</a></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-3" href="#">Log Out</a></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-4" href="04_new_account.html">Create account</a></li>
-                                </ul>
-                            </div>
-
+                            @*<div class="env pull-left"><i class="fa fa-envelope"></i></div>*@
                             <div class="clearfix"></div>
                         </div>
                     </div>

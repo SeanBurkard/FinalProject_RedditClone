@@ -186,7 +186,11 @@
                                             <div class="form-group row">
                                                 <div class="col-3"></div>
                                                 <div class="col-5">
-                                                    <input type="radio" name="rdUserRole" value="@Constants.Admin" /> @Constants.Admin
+                                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                                    {
+                                                        <input type="radio" name="rdUserRole" value="@Constants.Admin" /> @Constants.Admin
+                                                    }
+                                                    
                                                     <input type="radio" name="rdUserRole" value="@Constants.Contributor" checked /> @Constants.Contributor
                                                 </div>
                                             </div>
