@@ -8,13 +8,15 @@ namespace FinalProject_RedditClone.Repositories
         public IRoleRepository Role { get; }
         public IPostsRepository Posts { get; }
         public IForumRepository Forum { get; }
+        public ICommentRepository Comment { get; }
 
-        public UnitOfWork(IUserRepository user, IRoleRepository role, IPostsRepository posts, IForumRepository forum) 
+        public UnitOfWork(IUserRepository user, IRoleRepository role, IPostsRepository posts, IForumRepository forum, ICommentRepository comment) 
         {
             User = user;
             Role = role;
             Posts = posts;
             Forum = forum;
+            Comment = comment;
         }
     }
 }

@@ -60,6 +60,7 @@ namespace FinalProject_RedditClone
                 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
                 builder.Services.AddScoped<IPostsRepository, PostsRepository>();
                 builder.Services.AddScoped<IForumRepository, ForumRepository>();
+                builder.Services.AddScoped<ICommentRepository, CommentRepository>();
                 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             }
         }

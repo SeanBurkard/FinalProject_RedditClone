@@ -6,49 +6,46 @@
 
 <h1>Details</h1>
 
-<div>
-    <h4>Posts</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Content)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Content)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UserId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UserId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ForumId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ForumId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedAt)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UpdatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UpdatedAt)
-        </dd>
-    </dl>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-8">
+            <div class="post">
+                <div class="wrap-ut pull-left">
+                    <div class="userinfo pull-left">
+                        <div class="avatar">
+                            <img src="images/avatar.jpg" alt="" />
+                            <div class="status green">&nbsp;</div>
+                        </div>
+
+                        <div class="icons">
+                            <img src="images/icon1.jpg" alt="" /><img src="images/icon4.jpg" alt="" />
+                        </div>
+                    </div>
+                    <div class="posttext pull-left">
+                        <h2><a asp-controller="Posts" asp-action="Details" asp-route-id="@Model.Id">@Model.Title</a></h2>
+                        <p>@Model.Content</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="postinfo pull-left">
+                    <div class="comments">
+                        <div class="commentbg">
+                            560
+                            <div class="mark"></div>
+                        </div>
+
+                    </div>
+                    <div class="views"><i class="fa fa-eye"></i> 1,568</div>
+                    <div class="time"><i class="fa fa-clock-o"></i> 24 min</div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+    </div>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+

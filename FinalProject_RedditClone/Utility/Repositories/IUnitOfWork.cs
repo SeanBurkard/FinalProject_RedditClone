@@ -6,5 +6,6 @@
         IRoleRepository Role { get; }
         IPostsRepository Posts { get; }
         IForumRepository Forum { get; }
+        ICommentRepository Comment { get; }
     }
 }

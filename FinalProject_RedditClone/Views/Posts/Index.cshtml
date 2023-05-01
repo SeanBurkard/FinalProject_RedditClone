@@ -28,7 +28,7 @@
                             </div>
                         </div>
                         <div class="posttext pull-left">
-                            <h2><a href="">@post.Title</a></h2>
+                            <h2><a asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id">@post.Title</a></h2>
                             <p>@post.Content</p>
                         </div>
                         <div class="clearfix"></div>
