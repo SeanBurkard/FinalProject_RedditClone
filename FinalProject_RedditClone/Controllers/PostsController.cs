@@ -95,7 +95,7 @@ namespace FinalProject_RedditClone.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreatePostVM model)
         {
-            var result = _moderationController.UseChatGpt(model.Post.Content);
+            //var result = _moderationController.UseChatGpt(model.Post.Content);
 
             Posts post = new Posts
             {
