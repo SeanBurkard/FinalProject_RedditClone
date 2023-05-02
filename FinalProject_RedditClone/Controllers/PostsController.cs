@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FinalProject_RedditClone.Data;
 using FinalProject_RedditClone.Models;
+using FinalProject_RedditClone.Repositories;
 using FinalProject_RedditClone.Utility.Repositories;
 using FinalProject_RedditClone.Utility.ViewModels;
 using System.Security.Claims;
@@ -49,7 +50,7 @@ namespace FinalProject_RedditClone.Controllers
                 Comments = comments
             };
 
-            return View(post);
+            return View(vm);
         }
 
 
