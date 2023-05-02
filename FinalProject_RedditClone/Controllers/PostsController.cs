@@ -26,7 +26,7 @@ namespace FinalProject_RedditClone.Controllers
         }
 
         // GET: Posts
-        public IActionResult Index()
+        public IActionResult Index(string searchString)
         {
             var posts = _unitOfWork.Posts.GetAll();
             return View(posts);

@@ -2,6 +2,7 @@
 using FinalProject_RedditClone.Utility.Repositories;
 using FinalProject_RedditClone.Utility.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using System.Diagnostics;
 
 namespace FinalProject_RedditClone.Controllers
@@ -17,16 +18,20 @@ namespace FinalProject_RedditClone.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string searchString)
         {
-            var posts = _unitOfWork.Posts.GetAll();
-            var forums = _unitOfWork.Forum.GetAll();
-
-            var model = new HomeFeedVM()
+            var model = new HomeFeedVM();
+            model.Forums = _unitOfWork.Forum.GetAll();
+            
+            if (String.IsNullOrEmpty(searchString))
             {
-                Posts = posts,
-                Forums = forums
-            };
+                model.Posts = _unitOfWork.Posts.GetAll();
+            }
+            else
+            {
+                model.Posts = _unitOfWork.Posts.SearchPosts(searchString);
+                model.SearchString = searchString;
+            }
 
             return View(model);
         }

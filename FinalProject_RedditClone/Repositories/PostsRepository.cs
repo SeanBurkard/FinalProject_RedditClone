@@ -1,6 +1,7 @@
 ﻿using FinalProject_RedditClone.Data;
 using FinalProject_RedditClone.Models;
 using FinalProject_RedditClone.Utility.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace FinalProject_RedditClone.Repositories
 {
@@ -36,6 +37,13 @@ namespace FinalProject_RedditClone.Repositories
         public Posts GetById(int id)
         {
             return _context.Posts.FirstOrDefault(p => p.Id == id);
+        }
+
+        public IEnumerable<Posts> SearchPosts(string query)
+        {
+            var titleMatch = _context.Posts.Where(p => p.Title.Contains(query));
+            var contentMatch = _context.Posts.Where(p => p.Content.Contains(query));
+            return titleMatch.Union(contentMatch);
         }
 
         public void Update(Posts post)
