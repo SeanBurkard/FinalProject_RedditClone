@@ -35,14 +35,24 @@ namespace FinalProject_RedditClone.Controllers
         // GET: Posts/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var posts = _unitOfWork.Posts.GetById(id);
-            if (posts == null)
+            var post = _unitOfWork.Posts.GetById(id);
+            var comments = _unitOfWork.Comment.GetAllByPostId(id);
+
+            if (post == null)
             {
                 return NotFound();
             }
 
-            return View(posts);
+            var vm = new PostDetailsVM()
+            {
+                Post = post,
+                Comments = comments
+            };
+
+            return View(post);
         }
+
+
 
         // GET: Posts/Create
         [HttpGet]
