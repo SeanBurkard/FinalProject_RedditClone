@@ -70,6 +70,22 @@ namespace FinalProject_RedditClone.Controllers
             return RedirectToAction("Details", "Posts", new { id = vm.PostId });
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddVote(PostDetailsVM vm)
+        {
+            var vote = new Vote()
+            {
+                PostId = vm.PostId,
+                UserId = GetCurrentUserId(),
+                ForumId = vm.ForumId,
+                IsUpvote = vm.IsUpvote,
+                CreatedAt = DateTime.Now
+            };
+
+            _unitOfWork.Vote.Add(vote);
+
+            return RedirectToAction("Details", "Posts", new { id = vm.PostId });
+        }
 
         // GET: Posts/Create
         [HttpGet]

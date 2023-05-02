@@ -28,9 +28,25 @@
                     <div class="clearfix"></div>
                 </div>                              
                 <div class="postinfobot">
-                    <div class="likeblock pull-left">
+                    @*<div class="likeblock pull-left">
                         <a href="#" class="up"><i class="fa fa-thumbs-o-up"></i>25</a>
                         <a href="#" class="down"><i class="fa fa-thumbs-o-down"></i>3</a>
+                    </div>*@
+
+                    <div class="likeblock pull-left">
+                        <form method="post" asp-action="AddVote" style="display: inline-block;">
+                            <input type="hidden" name="ForumId" value="@Model.Post.ForumId" />
+                            <input type="hidden" name="PostId" value="@Model.Post.Id" />
+                            <input type="hidden" name="IsUpvote" value="true" />
+                            <button type="submit">Like</button>
+                        </form>
+
+                        <form method="post" asp-action="AddVote"style="display: inline-block;">
+                            <input type="hidden" name="ForumId" value="@Model.Post.ForumId" />
+                            <input type="hidden" name="PostId" value="@Model.Post.Id" />
+                            <input type="hidden" name="IsUpvote" value="false" />
+                            <button type="submit">Dislike</button>
+                        </form>
                     </div>
 
                     <div class="prev pull-left">                                        

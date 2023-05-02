@@ -8,5 +8,8 @@ namespace FinalProject_RedditClone.Utility.ViewModels
         public IEnumerable<Comment> Comments { get; set; }
         public string? CommentText { get; set; }
         public int PostId { get; set; }
+        public IEnumerable<Vote> Votes { get; set; }
+        public bool IsUpvote { get; set; }
+        public int? ForumId { get; set; }
     }
 }
