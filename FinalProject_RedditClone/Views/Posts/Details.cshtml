@@ -34,23 +34,35 @@
                     </div>*@
 
                     <div class="likeblock pull-left">
-                        <form method="post" asp-action="AddVote" style="display: inline-block;">
+                        <form id="upvote-form" method="post" asp-action="AddVote" style="display: inline-block;">
                             <input type="hidden" name="ForumId" value="@Model.Post.ForumId" />
                             <input type="hidden" name="PostId" value="@Model.Post.Id" />
                             <input type="hidden" name="IsUpvote" value="true" />
-                            <button type="submit">Like</button>
+                            <button type="submit" style="display: none;"></button>
                         </form>
+                        @{
+                            int upvoteCount = Model.Votes.Count(v => v.IsUpvote);
+                        }
+                        <a href="#" class="icon-button" id="upvote-button">
+                            <i class="fa fa-thumbs-o-up">@upvoteCount</i>
 
-                        <form method="post" asp-action="AddVote"style="display: inline-block;">
+                        @*<div class="status green">&nbsp;</div>*@
+
+                        <form id="downvote-form" method="post" asp-action="AddVote"style="display: inline-block;">
                             <input type="hidden" name="ForumId" value="@Model.Post.ForumId" />
                             <input type="hidden" name="PostId" value="@Model.Post.Id" />
                             <input type="hidden" name="IsUpvote" value="false" />
-                            <button type="submit">Dislike</button>
+                            <button type="submit" style="display: none;"></button>
                         </form>
+                            @{
+                                int downvoteCount = Model.Votes.Count(v => v.IsUpvote == false);
+                            }
+                        <a href="#" class="icon-button" id="downvote-button">
+                            <i class="fa fa-thumbs-o-down">@downvoteCount</i>
                     </div>
 
-                    <div class="prev pull-left">                                        
-                        <a href="#"><i class="fa fa-reply"></i></a>
+                    @*<div class="prev pull-left">                                        
+                        <a href="#"><i class="fa fa-reply"></i></a>*@
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -154,4 +166,21 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+<script>
+    const upvoteButton = document.getElementById("upvote-button");
+    const upvoteForm = document.getElementById("upvote-form");
+
+    upvoteButton.addEventListener("click", function () {
+        // Submit the form
+        upvoteForm.submit();
+    });
+
+    const downvoteButton = document.getElementById("downvote-button");
+    const downvoteForm = document.getElementById("downvote-form");
+
+    downvoteButton.addEventListener("click", function () {
+        // Submit the form
+        downvoteForm.submit();
+    });
+</script>
 
