@@ -6,6 +6,7 @@ namespace FinalProject_RedditClone.Utility.ViewModels
     {
         public Posts Post { get; set; }
         public IEnumerable<Comment> Comments { get; set; }
-        public string CommentText { get; set; }
+        public string? CommentText { get; set; }
+        public int PostId { get; set; }
     }
 }

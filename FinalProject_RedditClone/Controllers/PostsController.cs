@@ -47,12 +47,28 @@ namespace FinalProject_RedditClone.Controllers
             var vm = new PostDetailsVM()
             {
                 Post = post,
-                Comments = comments
+                Comments = comments,
+                PostId = id
             };
 
             return View(vm);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddComment(PostDetailsVM vm)
+        {
+            var comment = new Comment()
+            {
+                PostId = vm.PostId,
+                UserId = GetCurrentUserId(),
+                CommentText = vm.CommentText,
+                CreatedAt = DateTime.Now
+            };
+
+            _unitOfWork.Comment.Add(comment);
+
+            return RedirectToAction("Details", "Posts", new { id = vm.PostId });
+        }
 
 
         // GET: Posts/Create
