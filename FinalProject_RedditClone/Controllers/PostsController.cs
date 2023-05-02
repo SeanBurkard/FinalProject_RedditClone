@@ -12,6 +12,7 @@ using FinalProject_RedditClone.Utility.Repositories;
 using FinalProject_RedditClone.Utility.ViewModels;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
+using FinalProject_RedditClone.Utility;
 
 namespace FinalProject_RedditClone.Controllers
 {
@@ -19,11 +20,13 @@ namespace FinalProject_RedditClone.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly ModerationController _moderationController;
 
-        public PostsController(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager)
+        public PostsController(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager, ModerationController moderationController)
         {
-           _unitOfWork = unitOfWork;
-           _userManager = userManager;
+            _unitOfWork = unitOfWork;
+            _userManager = userManager;
+            _moderationController = moderationController;
         }
 
         // GET: Posts
@@ -111,18 +114,20 @@ namespace FinalProject_RedditClone.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreatePostVM model)
         {
-                Posts post = new Posts
-                {
-                    Title = model.Post.Title,
-                    Content = model.Post.Content,
-                    UserId = GetCurrentUserId(),
-                    ForumId = model.ForumId,
-                    CreatedAt = DateTime.Now,
-                    UpdatedAt = DateTime.Now
-                };
+            //var result = _moderationController.UseChatGpt(model.Post.Content);
 
-                _unitOfWork.Posts.Add(post);
-                return RedirectToAction(nameof(Index));
+            Posts post = new Posts
+            {
+                Title = model.Post.Title,
+                Content = model.Post.Content,
+                UserId = GetCurrentUserId(),
+                ForumId = model.ForumId,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
+            };
+
+            _unitOfWork.Posts.Add(post);
+            return RedirectToAction(nameof(Index));
            
         }
 

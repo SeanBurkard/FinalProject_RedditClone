@@ -1,3 +1,4 @@
+using FinalProject_RedditClone.Controllers;
 using FinalProject_RedditClone.Data;
 using FinalProject_RedditClone.Repositories;
 using FinalProject_RedditClone.Utility.Repositories;
@@ -22,6 +23,7 @@ namespace FinalProject_RedditClone
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<ModerationController>();
 
             AddScoped();
 
