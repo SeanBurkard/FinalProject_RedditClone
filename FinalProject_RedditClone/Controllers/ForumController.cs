@@ -9,6 +9,7 @@ using FinalProject_RedditClone.Data;
 using FinalProject_RedditClone.Models;
 using FinalProject_RedditClone.Repositories;
 using FinalProject_RedditClone.Utility.Repositories;
+using FinalProject_RedditClone.Utility.ViewModels;
 
 namespace FinalProject_RedditClone.Controllers
 {
@@ -37,7 +38,15 @@ namespace FinalProject_RedditClone.Controllers
                 return NotFound();
             }
 
-            return View(forum);
+            var posts = _unitOfWork.Posts.GetAllByForumId(id);
+
+            var model = new ForumDetailsVM()
+            {
+                Forum = forum,
+                Posts = posts
+            };
+
+            return View(model);
         }
 
         // GET: Forum/Create

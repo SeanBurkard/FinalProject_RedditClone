@@ -140,7 +140,23 @@
                             }
                            
                         </div>
-                        
+
+                        <div class="col-lg-4 col-md-4">
+
+                            <!-- -->
+                            <div class="sidebarblock">
+                                <h3>Top Forums</h3>
+                                <div class="divline"></div>
+                                <div class="blocktxt">
+                                    <ul class="cats">
+                                        @foreach (var forum in Model.Forums)
+                                        {
+                                            <li><a asp-controller="Forum" asp-action="Details" asp-route-id="@forum.Id">@forum.Title <span class="badge pull-right">20</span></a></li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
