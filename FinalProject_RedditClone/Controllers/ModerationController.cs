@@ -13,7 +13,7 @@ namespace FinalProject_RedditClone.Controllers
         [HttpGet]
         public async Task<Result> UseChatGpt(string query)
         {
-            var openai = new OpenAIAPI("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");
+            var openai = new OpenAIAPI("");
             ModerationRequest moderationRequest = new ModerationRequest();
             moderationRequest.Input = query;
 
