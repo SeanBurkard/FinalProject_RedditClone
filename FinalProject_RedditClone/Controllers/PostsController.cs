@@ -13,6 +13,7 @@ using FinalProject_RedditClone.Utility.ViewModels;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using FinalProject_RedditClone.Utility;
+using System.Net;
 
 namespace FinalProject_RedditClone.Controllers
 {
@@ -37,7 +38,7 @@ namespace FinalProject_RedditClone.Controllers
         }
 
         // GET: Posts/Details/5
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int id, string error)
         {
             var post = _unitOfWork.Posts.GetById(id);
             var comments = _unitOfWork.Comment.GetAllByPostId(id);
@@ -55,7 +56,8 @@ namespace FinalProject_RedditClone.Controllers
                 Comments = comments,
                 PostId = id, 
                 Votes = votes, 
-                RelatedPosts = posts
+                RelatedPosts = posts,
+                Error = error
             };
 
             return View(vm);
@@ -72,6 +74,20 @@ namespace FinalProject_RedditClone.Controllers
                 CommentText = vm.CommentText,
                 CreatedAt = DateTime.Now
             };
+
+            var bodyResult = _moderationController.UseChatGpt(comment.CommentText);
+
+            try
+            {
+                if (bodyResult.Result.Flagged)
+                {
+                    throw new Exception("Comment violates community guidelines.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Details", "Posts", new { id = vm.PostId, error = ex.Message });
+            }
 
             _unitOfWork.Comment.Add(comment);
 
@@ -97,9 +113,14 @@ namespace FinalProject_RedditClone.Controllers
 
         // GET: Posts/Create
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(string error)
         {
             var model = new CreatePostVM();
+
+            if (!String.IsNullOrEmpty(error))
+            {
+                model.Error = "Error: " + error;
+            }
 
             var forums = _unitOfWork.Forum.GetAll();
             var selectList = new SelectList(forums, "Id", "Title");
@@ -116,7 +137,8 @@ namespace FinalProject_RedditClone.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreatePostVM model)
         {
-            //var result = _moderationController.UseChatGpt(model.Post.Content);
+            var bodyResult = _moderationController.UseChatGpt(model.Post.Content);
+            var titleResult = _moderationController.UseChatGpt(model.Post.Title);
 
             Posts post = new Posts
             {
@@ -128,8 +150,30 @@ namespace FinalProject_RedditClone.Controllers
                 UpdatedAt = DateTime.Now
             };
 
+            try
+            {
+                if (bodyResult.Result.Flagged && titleResult.Result.Flagged)
+                {
+                    throw new Exception("Post title and content violate community guidelines.");
+                }
+
+                if (bodyResult.Result.Flagged && !titleResult.Result.Flagged)
+                {
+                    throw new Exception("Post content violates community guidelines.");
+                }
+
+                if (!bodyResult.Result.Flagged && titleResult.Result.Flagged)
+                {
+                    throw new Exception("Post title violates community guidelines.");
+                }
+            }
+            catch(Exception ex)
+            {
+                return RedirectToAction("Create", new {error = ex.Message});
+            }
+
             _unitOfWork.Posts.Add(post);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Details", new {id = post.Id});
            
         }
 

@@ -12,5 +12,6 @@ namespace FinalProject_RedditClone.Utility.ViewModels
         public bool IsUpvote { get; set; }
         public int? ForumId { get; set; }
         public IEnumerable<Posts> RelatedPosts { get; set; }
+        public string Error { get; set; }
     }
 }

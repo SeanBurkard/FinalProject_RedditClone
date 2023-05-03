@@ -97,14 +97,13 @@
                         </div>
 
                         <div class="postinfobot">
-                            <div class="notechbox pull-left">
-                                <input type="checkbox" name="note" id="note" class="form-control" hidden="hidden">
-                            </div>
-
-                            <div class="pull-left">
-                                <label for="note" hidden="hidden"> Email me when some one post a reply</label>
-                            </div>
-
+                            @if(Model.Error != null)
+                            {
+                                <div class="pull-left">
+                                    <p class="text-danger">@Model.Error</p>
+                                </div>
+                            }
+                            
                             <div class="pull-right postreply">
                                 <div class="pull-left smile"><a href="#"><i class="fa fa-smile-o"></i></a></div>
                                 <div class="pull-left"><button type="submit" class="btn btn-primary">Post Reply</button></div>

@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FinalProject_RedditClone.Utility;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OpenAI_API;
 using OpenAI_API.Completions;
 using OpenAI_API.Moderation;
+using System.Reflection.Metadata;
 
 namespace FinalProject_RedditClone.Controllers
 {
@@ -13,7 +15,7 @@ namespace FinalProject_RedditClone.Controllers
         [HttpGet]
         public async Task<Result> UseChatGpt(string query)
         {
-            var openai = new OpenAIAPI("");
+            var openai = new OpenAIAPI(Constants.ApiKey);
             ModerationRequest moderationRequest = new ModerationRequest();
             moderationRequest.Input = query;
 

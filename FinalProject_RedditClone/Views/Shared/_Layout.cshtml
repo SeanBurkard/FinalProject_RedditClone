@@ -42,7 +42,9 @@
         <div class="headernav">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-1 col-xs-3 col-sm-2 col-md-2 logo "><a href="index.html"><img src="images/logo.jpg" alt="" /></a></div>
+                    <div class="col-lg-1 col-xs-3 col-sm-2 col-md-2 logo ">
+                        <h2 class=""><a class="" asp-controller="Home" asp-action="Index">SpeakEasy</a></h2>
+                    </div>
                     <div class="col-lg-3 col-xs-9 col-sm-5 col-md-3 selecttopic">
                         <div class="dropdown">
                             @*Add forum ddl here*@
@@ -70,7 +72,9 @@
                                         <li><a asp-controller="User" asp-action="Edit">View Profile</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li>
-                                            <a asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">Logout</a>
+                                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                                            </form>
                                         </li>
                                     </ul>
                                 </div>

@@ -10,5 +10,6 @@ namespace FinalProject_RedditClone.Utility.ViewModels
         public int ForumId { get; set; }
         public ApplicationUser User { get; set; }
         public Posts Post { get; set; }
+        public string? Error { get; set; }
     }
 }

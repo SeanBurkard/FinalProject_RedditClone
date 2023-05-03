@@ -16,10 +16,12 @@ namespace FinalProject_RedditClone.Controllers
     public class ForumController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ModerationController _moderationController;
 
-        public ForumController(IUnitOfWork unitOfWork)
+        public ForumController(IUnitOfWork unitOfWork, ModerationController moderationController)
         {
             _unitOfWork = unitOfWork;
+            _moderationController = moderationController;
         }
 
         // GET: Forum
@@ -50,8 +52,9 @@ namespace FinalProject_RedditClone.Controllers
         }
 
         // GET: Forum/Create
-        public IActionResult Create()
+        public IActionResult Create(string error)
         {
+            ViewData["Error"] = error;
             return View();
         }
 
@@ -62,8 +65,33 @@ namespace FinalProject_RedditClone.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,Description")] Forum forum)
         {
+            var bodyResult = _moderationController.UseChatGpt(forum.Description);
+            var titleResult = _moderationController.UseChatGpt(forum.Title);
+
             if (ModelState.IsValid)
             {
+                try
+                {
+                    if (bodyResult.Result.Flagged && titleResult.Result.Flagged)
+                    {
+                        throw new Exception("Forum title and description violate community guidelines.");
+                    }
+
+                    if (bodyResult.Result.Flagged && !titleResult.Result.Flagged)
+                    {
+                        throw new Exception("Forum description violates community guidelines.");
+                    }
+
+                    if (!bodyResult.Result.Flagged && titleResult.Result.Flagged)
+                    {
+                        throw new Exception("Forum title violates community guidelines.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return RedirectToAction("Create", new { error = ex.Message });
+                }
+
                 forum.CreatedAt = DateTime.Now;
                 forum.UpdatedAt = DateTime.Now;
 
