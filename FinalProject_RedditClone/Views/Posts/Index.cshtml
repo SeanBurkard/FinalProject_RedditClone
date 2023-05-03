@@ -19,8 +19,8 @@
                     <div class="wrap-ut pull-left">
                         <div class="userinfo pull-left">
                             <div class="avatar">
-                                <img src="@Url.Action("GetProfilePicture", "User", new {post.UserId})" />
-                                <div class="status green">&nbsp;</div>
+                                <img src="@Url.Action("GetProfilePicture", "User", new {Id = post.UserId})" width="50" height="50" />
+                                @*<div class="status green">&nbsp;</div>*@
                             </div>
 
                             <div class="icons">

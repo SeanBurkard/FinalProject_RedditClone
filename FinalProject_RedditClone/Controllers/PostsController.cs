@@ -41,6 +41,7 @@ namespace FinalProject_RedditClone.Controllers
         {
             var post = _unitOfWork.Posts.GetById(id);
             var comments = _unitOfWork.Comment.GetAllByPostId(id);
+            var votes = _unitOfWork.Vote.GetAllByPostId(id);
 
             if (post == null)
             {
@@ -51,11 +52,13 @@ namespace FinalProject_RedditClone.Controllers
             {
                 Post = post,
                 Comments = comments,
-                PostId = id
+                PostId = id, 
+                Votes = votes
             };
 
             return View(vm);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> AddComment(PostDetailsVM vm)
