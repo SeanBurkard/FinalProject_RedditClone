@@ -1,0 +1,99 @@
+﻿@using FinalProject_RedditClone.Utility.ViewModels;
+@model ReportingVM;
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 style="font-weight: bold">Reports</h1>
+
+<br />
+<h3>Post Details</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Post Title</th>
+            <th>Comment Count</th>
+            <th>Upvotes</th>
+            <th>Downvotes</th>
+        </tr>
+    </thead>
+    @foreach (var post in Model.Posts)
+    {
+        int commentCount = 0;
+        foreach(var comment in Model.Comments)
+        {
+            if(comment.PostId == post.Id)
+            {
+                commentCount++;
+            }
+        }
+
+        int upvotes = 0;
+        int downvotes = 0;
+        foreach (var vote in Model.Votes)
+        {
+
+            if (vote.PostId == post.Id)
+            {
+                if(vote.IsUpvote)
+                {
+                    upvotes++;
+                }
+                else
+                {
+                    downvotes++;
+                }
+            }
+        }
+
+        <tr>
+            <td>@post.Title</td>
+            <td>@commentCount</td>
+            <td>@upvotes</td>
+            <td>@downvotes</td>
+        </tr>
+    }
+</table>
+
+<br />
+<h3>Forum Details</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Likes</th>
+            <th>Post Count</th>
+        </tr>
+    </thead>
+
+    @foreach (var forum in Model.Forums)
+    {
+        int postCount = 0;
+        foreach(var post in Model.Posts)
+        {
+            if(post.ForumId == forum.Id)
+            {
+                postCount++;
+            }
+        }
+
+        int voteCount = 0;
+        foreach(var vote in Model.Votes)
+        {
+            if(vote.ForumId == forum.Id)
+            {
+                voteCount++;
+            }
+        }
+
+        <tr>
+            <td>@forum.Title</td>
+            <td>@voteCount</td>
+            <td>@postCount</td>
+        </tr>
+    }
+</table>
+
+
+

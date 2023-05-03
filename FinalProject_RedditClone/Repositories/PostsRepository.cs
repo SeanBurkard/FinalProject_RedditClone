@@ -2,6 +2,7 @@
 using FinalProject_RedditClone.Models;
 using FinalProject_RedditClone.Utility.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 
 namespace FinalProject_RedditClone.Repositories
 {
@@ -51,5 +52,6 @@ namespace FinalProject_RedditClone.Repositories
             _context.Posts.Update(post);
             _context.SaveChanges();
         }
+
     }
 }
