@@ -17,11 +17,13 @@ namespace FinalProject_RedditClone.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public UserController(IUnitOfWork unitOfWork, SignInManager<IdentityUser> signInManager)
+        public UserController(IUnitOfWork unitOfWork, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
         {
             _unitOfWork = unitOfWork;
             _signInManager = signInManager;
+            _userManager = userManager;
         }
 
         [Authorize(Roles = "Admin")]
@@ -34,6 +36,11 @@ namespace FinalProject_RedditClone.Controllers
         [Authorize(Roles = "Admin, Contributor")]
         public async Task<IActionResult> Edit(string id)
         {
+            if (String.IsNullOrEmpty(id))
+            {
+                id = GetCurrentUserId();
+            }
+
             var user = _unitOfWork.User.GetUser(id);
             var roles = _unitOfWork.Role.GetRoles();
 
@@ -132,5 +139,10 @@ namespace FinalProject_RedditClone.Controllers
             return File(imgData, "image/jpg");
         }
 
+        private string GetCurrentUserId()
+        {
+            var userId = _userManager.GetUserId(HttpContext.User);
+            return userId;
+        }
     }
 }
