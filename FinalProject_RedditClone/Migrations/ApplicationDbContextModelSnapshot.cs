@@ -125,14 +125,12 @@ namespace FinalProject_RedditClone.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("ForumId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<bool>("IsUpvote")
                         .HasColumnType("bit");
 
                     b.Property<int?>("PostId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
@@ -414,15 +412,11 @@ namespace FinalProject_RedditClone.Migrations
                 {
                     b.HasOne("FinalProject_RedditClone.Models.Forum", "Forum")
                         .WithMany()
-                        .HasForeignKey("ForumId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ForumId");
 
                     b.HasOne("FinalProject_RedditClone.Models.Posts", "Post")
                         .WithMany()
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PostId");
 
                     b.HasOne("FinalProject_RedditClone.Models.ApplicationUser", "User")
                         .WithMany()

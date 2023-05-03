@@ -11,5 +11,6 @@ namespace FinalProject_RedditClone.Utility.Repositories
         void Add(Vote vote);
         void Update(Vote vote);
         void Delete(Vote vote);
+        bool Exists(Vote vote);
     }
 }

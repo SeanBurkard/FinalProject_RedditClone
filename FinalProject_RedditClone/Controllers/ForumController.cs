@@ -10,6 +10,7 @@ using FinalProject_RedditClone.Models;
 using FinalProject_RedditClone.Repositories;
 using FinalProject_RedditClone.Utility.Repositories;
 using FinalProject_RedditClone.Utility.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace FinalProject_RedditClone.Controllers
 {
@@ -17,11 +18,13 @@ namespace FinalProject_RedditClone.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ModerationController _moderationController;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public ForumController(IUnitOfWork unitOfWork, ModerationController moderationController)
+        public ForumController(IUnitOfWork unitOfWork, ModerationController moderationController, UserManager<IdentityUser> userManager)
         {
             _unitOfWork = unitOfWork;
             _moderationController = moderationController;
+            _userManager = userManager;
         }
 
         // GET: Forum
@@ -195,6 +198,35 @@ namespace FinalProject_RedditClone.Controllers
             }
 
             return true;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddVote(ForumDetailsVM vm)
+        {
+            var vote = new Vote()
+            {
+                PostId = null,
+                UserId = GetCurrentUserId(),
+                ForumId = vm.ForumId,
+                IsUpvote = true,
+                CreatedAt = DateTime.Now
+            };
+
+            bool exists = _unitOfWork.Vote.Exists(vote);
+
+            if (!exists)
+            {
+                _unitOfWork.Vote.Add(vote);
+            }
+            
+
+            return RedirectToAction("Details", "Forum", new {id = vm.ForumId});
+        }
+
+        private string GetCurrentUserId()
+        {
+            var userId = _userManager.GetUserId(HttpContext.User);
+            return userId;
         }
     }
 }

@@ -101,12 +101,17 @@ namespace FinalProject_RedditClone.Controllers
             {
                 PostId = vm.PostId,
                 UserId = GetCurrentUserId(),
-                ForumId = vm.ForumId,
+                ForumId = null,
                 IsUpvote = vm.IsUpvote,
                 CreatedAt = DateTime.Now
             };
+            
+            bool exists = _unitOfWork.Vote.Exists(vote);
 
-            _unitOfWork.Vote.Add(vote);
+            if (!exists)
+            {
+                _unitOfWork.Vote.Add(vote);
+            }
 
             return RedirectToAction("Details", "Posts", new { id = vm.PostId });
         }

@@ -9,6 +9,34 @@
 
 <div>
     <h4>@Model.Forum.Description</h4>
+    <h5>Likes: </h5>
+    <div class="row pull-left">
+        @if(User.IsInRole("Admin") || User.IsInRole("Contributor"))
+        {
+            <div class="col">
+                <form asp-controller="Forum" asp-action="AddVote">
+                    <input type="hidden" asp-for="@Model.ForumId" value="@Model.Forum.Id"/>
+                    <button class="btn btn-primary" type="submit">Like</button>
+                </form>
+            </div>
+
+            <div class="col">
+                <form>
+                    <button class="btn btn-primary" asp-controller="Posts" asp-action="Create">New Post</button>
+                </form>
+            </div>
+        }
+        
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="col">
+                <form>
+                    <button class="btn btn-primary" asp-controller="Forum" asp-action="Delete">Delete Forum</button>
+                </form>
+            </div>
+        }
+    </div>
+    <br />
     <hr />
     <div class="container">
         <div class="row">

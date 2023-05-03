@@ -16,7 +16,7 @@ namespace FinalProject_RedditClone.Models
         public DateTime UpdatedAt { get;}
 
         public virtual ApplicationUser User { get; set; }
-        public virtual Posts Post { get; set; }
-        public virtual Forum Forum { get; set; }
+        public virtual Posts? Post { get; set; }
+        public virtual Forum? Forum { get; set; }
     }
 }

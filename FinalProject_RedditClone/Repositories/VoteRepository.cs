@@ -13,6 +13,17 @@ namespace FinalProject_RedditClone.Repositories
         }
         public void Add(Vote vote)
         {
+            Vote toDelete = new Vote();
+            if(vote.ForumId == null)
+            {
+                toDelete = _context.Vote.FirstOrDefault(v => v.PostId == vote.PostId && v.UserId == vote.UserId && v.IsUpvote != vote.IsUpvote);
+            }
+            
+            if(toDelete != null)
+            {
+                _context.Vote.Remove(toDelete);
+            }
+
             _context.Vote.Add(vote);
             _context.SaveChanges();
         }
@@ -53,6 +64,21 @@ namespace FinalProject_RedditClone.Repositories
         {
             _context.Vote.Update(vote);
             _context.SaveChanges();
+        }
+
+        public bool Exists(Vote vote)
+        {
+            bool exists = false;
+            if(vote.PostId == null)
+            {
+                exists = _context.Vote.Any(v => v.ForumId == vote.ForumId && v.UserId == vote.UserId);
+            }
+            else
+            {
+                exists = _context.Vote.Any(v => v.PostId == vote.PostId && v.UserId == vote.UserId && v.IsUpvote == vote.IsUpvote);
+            }
+
+            return exists;
         }
     }
 }
