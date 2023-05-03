@@ -14,6 +14,8 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using FinalProject_RedditClone.Utility;
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace FinalProject_RedditClone.Controllers
 {
@@ -59,12 +61,12 @@ namespace FinalProject_RedditClone.Controllers
                 RelatedPosts = posts,
                 Error = error
             };
-
             return View(vm);
         }
 
 
         [HttpPost]
+        [Authorize(Roles = "Admin, Contributor")]
         public async Task<IActionResult> AddComment(PostDetailsVM vm)
         {
             var comment = new Comment()
@@ -95,6 +97,7 @@ namespace FinalProject_RedditClone.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin, Contributor")]
         public async Task<IActionResult> AddVote(PostDetailsVM vm)
         {
             var vote = new Vote()
@@ -118,6 +121,7 @@ namespace FinalProject_RedditClone.Controllers
 
         // GET: Posts/Create
         [HttpGet]
+        [Authorize(Roles = "Admin, Contributor")]
         public IActionResult Create(string error)
         {
             var model = new CreatePostVM();
