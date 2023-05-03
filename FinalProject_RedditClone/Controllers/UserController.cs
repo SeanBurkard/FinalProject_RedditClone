@@ -5,7 +5,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json.Linq;
 using System.Security.Claims;
+using System.Xml.Linq;
 
 namespace FinalProject_RedditClone.Controllers
 {
@@ -65,25 +68,30 @@ namespace FinalProject_RedditClone.Controllers
 
             var rolesToAdd = new List<string>();
             var rolesToDelete = new List<string>();
+            
 
-            foreach (var role in data.Roles)
+            if(data.Roles != null)
             {
-                var assignedInDb = userRolesInDb.FirstOrDefault(ur => ur == role.Text);
-                if (role.Selected)
+                foreach (var role in data.Roles)
                 {
-                    if (assignedInDb == null)
+                    var assignedInDb = userRolesInDb.FirstOrDefault(ur => ur == role.Text);
+                    if (role.Selected)
                     {
-                        rolesToAdd.Add(role.Text);
+                        if (assignedInDb == null)
+                        {
+                            rolesToAdd.Add(role.Text);
+                        }
                     }
-                }
-                else
-                {
-                    if (assignedInDb != null)
+                    else
                     {
-                        rolesToDelete.Add(role.Text);
+                        if (assignedInDb != null)
+                        {
+                            rolesToDelete.Add(role.Text);
+                        }
                     }
                 }
             }
+            
 
             if (rolesToAdd.Any())
             {
