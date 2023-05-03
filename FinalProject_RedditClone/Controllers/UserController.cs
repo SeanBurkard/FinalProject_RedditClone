@@ -9,7 +9,7 @@ using System.Security.Claims;
 
 namespace FinalProject_RedditClone.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    
     public class UserController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -21,13 +21,14 @@ namespace FinalProject_RedditClone.Controllers
             _signInManager = signInManager;
         }
 
-
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             var users = _unitOfWork.User.GetUsers();
             return View(users);
         }
 
+        [Authorize(Roles = "Admin, Contributor")]
         public async Task<IActionResult> Edit(string id)
         {
             var user = _unitOfWork.User.GetUser(id);
