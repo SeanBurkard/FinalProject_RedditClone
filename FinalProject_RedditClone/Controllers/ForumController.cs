@@ -99,7 +99,7 @@ namespace FinalProject_RedditClone.Controllers
                 forum.UpdatedAt = DateTime.Now;
 
                 _unitOfWork.Forum.Add(forum);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", new {id = forum.Id});
             }
             return View(forum);
         }

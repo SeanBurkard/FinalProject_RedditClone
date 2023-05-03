@@ -6,6 +6,7 @@ namespace FinalProject_RedditClone.Utility.ViewModels
     {
         public IEnumerable<Posts> Posts { get; set; }
         public IEnumerable<Forum> Forums { get; set; }
+        public IEnumerable<Vote> Votes { get; set; }
         public string SearchString { get; set; }
         public ApplicationUser? User { get; set; }
     }
