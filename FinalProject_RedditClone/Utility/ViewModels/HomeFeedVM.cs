@@ -8,5 +8,6 @@ namespace FinalProject_RedditClone.Utility.ViewModels
         public IEnumerable<Forum> Forums { get; set; }
         public string SearchString { get; set; }
         public ApplicationUser? User { get; set; }
+        public IEnumerable<Comment> Comments { get; set; }
     }
 }

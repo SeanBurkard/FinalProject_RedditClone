@@ -26,7 +26,9 @@ namespace FinalProject_RedditClone.Controllers
             var model = new HomeFeedVM();
             var userId = _userManager.GetUserId(HttpContext.User);
             model.Forums = _unitOfWork.Forum.GetAll();
-            
+            model.Comments = _unitOfWork.Comment.GetAll();
+
+
             if (String.IsNullOrEmpty(searchString))
             {
                 model.Posts = _unitOfWork.Posts.GetAll();
