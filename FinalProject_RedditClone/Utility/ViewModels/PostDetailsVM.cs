@@ -13,5 +13,6 @@ namespace FinalProject_RedditClone.Utility.ViewModels
         public int? ForumId { get; set; }
         public IEnumerable<Posts> RelatedPosts { get; set; }
         public string Error { get; set; }
+        public ApplicationUser? User { get; set; }
     }
 }

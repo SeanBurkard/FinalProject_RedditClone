@@ -46,6 +46,7 @@ namespace FinalProject_RedditClone.Controllers
             var comments = _unitOfWork.Comment.GetAllByPostId(id);
             var votes = _unitOfWork.Vote.GetAllByPostId(id);
             var posts = _unitOfWork.Posts.GetAllByForumId(post.ForumId);
+            var user = _unitOfWork.User.GetUser(GetCurrentUserId());
 
             if (post == null)
             {
@@ -59,7 +60,8 @@ namespace FinalProject_RedditClone.Controllers
                 PostId = id, 
                 Votes = votes, 
                 RelatedPosts = posts,
-                Error = error
+                Error = error,
+                User = user
             };
             return View(vm);
         }
