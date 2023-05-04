@@ -93,7 +93,15 @@
                                     <ul class="cats">
                                         @foreach (var forum in Model.Forums)
                                         {
-                                            <li><a asp-controller="Forum" asp-action="Details" asp-route-id="@forum.Id">@forum.Title <span class="badge pull-right">20</span></a></li>
+                                            var postCount = 0;
+                                            @foreach(var post in Model.Posts)
+                                            {
+                                                if(post.ForumId == forum.Id)
+                                                {
+                                                    postCount++;
+                                                }
+                                            }
+                                            <li><a asp-controller="Forum" asp-action="Details" asp-route-id="@forum.Id">@forum.Title <span class="badge pull-right">@postCount</span></a></li>
                                         }
                                     </ul>
                                 </div>
@@ -112,7 +120,15 @@
                                                 {
                                                     if (vote.ForumId == forum.Id && vote.UserId == Model.User.Id)
                                                     {
-                                                        <li><a asp-controller="Forum" asp-action="Details" asp-route-id="@forum.Id">@forum.Title <span class="badge pull-right">20</span></a></li>
+                                                        var postCount = 0;
+                                                        @foreach(var post in Model.Posts)
+                                                        {
+                                                            if(post.ForumId == forum.Id)
+                                                            {
+                                                                postCount++;
+                                                            }
+                                                        }
+                                                        <li><a asp-controller="Forum" asp-action="Details" asp-route-id="@forum.Id">@forum.Title <span class="badge pull-right">@postCount</span></a></li>
                                                     }
                                                 }
                                             }
