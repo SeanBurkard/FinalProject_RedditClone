@@ -40,6 +40,12 @@ namespace FinalProject_RedditClone.Repositories
             return _context.Posts.FirstOrDefault(p => p.Id == id);
         }
 
+        public IEnumerable<Posts> GetHomeFeed()
+        {
+            var posts = _context.Posts.OrderByDescending(p =>p.UpdatedAt).ToList();
+            return posts;
+        }
+
         public IEnumerable<Posts> SearchPosts(string query)
         {
             var titleMatch = _context.Posts.Where(p => p.Title.Contains(query));

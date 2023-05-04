@@ -31,7 +31,7 @@ namespace FinalProject_RedditClone.Controllers
             
             if (String.IsNullOrEmpty(searchString))
             {
-                model.Posts = _unitOfWork.Posts.GetAll();
+                model.Posts = _unitOfWork.Posts.GetHomeFeed();
             }
             else
             {
