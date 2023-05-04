@@ -97,11 +97,15 @@
                                 </div>
                             }
                         </div>
-                        <div class="stnt pull-right">
-                            <form class="form-inline" asp-controller="Report" asp-action="Index">
-                                <button type="submit" class="btn btn-primary">Reports</button>
-                            </form>
-                        </div>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <div class="stnt pull-right">
+                                <form class="form-inline" asp-controller="Report" asp-action="Index">
+                                    <button type="submit" class="btn btn-primary">Reports</button>
+                                </form>
+                            </div>
+                        }
+                        
                         <div class="clearfix"></div>
                     </div>
                 </div>
