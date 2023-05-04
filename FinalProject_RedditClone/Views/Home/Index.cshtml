@@ -48,6 +48,15 @@
 
                             @foreach(var post in Model.Posts)
                             {
+                                int commentCount = 0;
+                                foreach (var comment in Model.Comments)
+                                {
+                                    if (comment.PostId == post.Id)
+                                    {
+                                        commentCount++;
+                                    }
+                                }
+
                                 <div class="post">
                                     <div class="wrap-ut pull-left">
                                         <div class="userinfo pull-left">
@@ -69,7 +78,7 @@
                                     <div class="postinfo pull-left">
                                         <div class="comments">
                                             <div class="commentbg">
-                                                560
+                                                @commentCount
                                                 <div class="mark"></div>
                                             </div>
 
