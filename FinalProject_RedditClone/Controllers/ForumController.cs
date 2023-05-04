@@ -11,6 +11,8 @@ using FinalProject_RedditClone.Repositories;
 using FinalProject_RedditClone.Utility.Repositories;
 using FinalProject_RedditClone.Utility.ViewModels;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace FinalProject_RedditClone.Controllers
 {
@@ -28,6 +30,8 @@ namespace FinalProject_RedditClone.Controllers
         }
 
         // GET: Forum
+
+        [Authorize(Roles = "Admin, Contributor")]
         public  IActionResult Index()
         {
             var forums = _unitOfWork.Forum.GetAll();
@@ -35,6 +39,8 @@ namespace FinalProject_RedditClone.Controllers
         }
 
         // GET: Forum/Details/5
+
+        [Authorize(Roles = "Admin, Contributor")]
         public async Task<IActionResult> Details(int id)
         {
             var forum = _unitOfWork.Forum.GetById(id);
@@ -55,6 +61,8 @@ namespace FinalProject_RedditClone.Controllers
         }
 
         // GET: Forum/Create
+
+        [Authorize(Roles = "Admin, Contributor")]
         public IActionResult Create(string error)
         {
             ViewData["Error"] = error;
@@ -66,6 +74,7 @@ namespace FinalProject_RedditClone.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Contributor")]
         public async Task<IActionResult> Create([Bind("Id,Title,Description")] Forum forum)
         {
             var bodyResult = _moderationController.UseChatGpt(forum.Description);

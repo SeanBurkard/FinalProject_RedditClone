@@ -40,6 +40,8 @@ namespace FinalProject_RedditClone.Controllers
         }
 
         // GET: Posts/Details/5
+
+        [Authorize(Roles = "Admin, Contributor")]
         public async Task<IActionResult> Details(int id, string error)
         {
             var post = _unitOfWork.Posts.GetById(id);
@@ -146,6 +148,7 @@ namespace FinalProject_RedditClone.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Contributor")]
         public async Task<IActionResult> Create(CreatePostVM model)
         {
             var bodyResult = _moderationController.UseChatGpt(model.Post.Content);
@@ -189,6 +192,8 @@ namespace FinalProject_RedditClone.Controllers
         }
 
         // GET: Posts/Edit/5
+
+        [Authorize(Roles = "Admin, Contributor")]
         public async Task<IActionResult> Edit(int id)
         {
             if (id == null || _unitOfWork.Posts == null)
@@ -209,6 +214,7 @@ namespace FinalProject_RedditClone.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Contributor")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Content,UserId,ForumId,CreatedAt,UpdatedAt")] Posts posts)
         {
             if (id != posts.Id)
