@@ -15,10 +15,6 @@
                             <img src="@Url.Action("GetProfilePicture", "User", new {Id = Model.Post.UserId})" width="50" height="50" />
                             @*<div class="status green">&nbsp;</div>*@
                         </div>
-
-                        <div class="icons">
-                            <img src="~/images/icon1.jpg" alt="" /><img src="~/images/icon4.jpg" alt="" /><img src="~/images/icon5.jpg" alt="" /><img src="~/images/icon6.jpg" alt="" />
-                        </div>
                     </div>
                     <div class="posttext pull-left">
                         <h2>@Model.Post.Title</h2>
@@ -56,6 +52,13 @@
                             <i class="fa fa-thumbs-o-down"></i> @downvoteCount
                         </a>
                     </div>
+                    @if(Model.User.Id == Model.Post.UserId || User.IsInRole("Admin"))
+                    {
+                        <div class="pull-right">
+                            <a asp-controller="Posts" asp-action="Edit" asp-route-id="@Model.PostId">Edit</a>
+                        </div>
+                    }
+                    
                 <div class="clearfix"></div>
                 </div>
             </div>

@@ -188,56 +188,38 @@ namespace FinalProject_RedditClone.Controllers
            
         }
 
-        //// GET: Posts/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null || _context.Posts == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // GET: Posts/Edit/5
+        public async Task<IActionResult> Edit(int id)
+        {
+            if (id == null || _unitOfWork.Posts == null)
+            {
+                return NotFound();
+            }
 
-        //    var posts = await _context.Posts.FindAsync(id);
-        //    if (posts == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(posts);
-        //}
+            var posts = _unitOfWork.Posts.GetById(id);
+            if (posts == null)
+            {
+                return NotFound();
+            }
+            return View(posts);
+        }
 
-        //// POST: Posts/Edit/5
-        //// To protect from overposting attacks, enable the specific properties you want to bind to.
-        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Content,UserId,SubforumId,CreatedAt,UpdatedAt")] Posts posts)
-        //{
-        //    if (id != posts.Id)
-        //    {
-        //        return NotFound();
-        //    }
+        // POST: Posts/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Content,UserId,ForumId,CreatedAt,UpdatedAt")] Posts posts)
+        {
+            if (id != posts.Id)
+            {
+                return NotFound();
+            }
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(posts);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!PostsExists(posts.Id))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(posts);
-        //}
+            _unitOfWork.Posts.Update(posts);
+            
+            return RedirectToAction("Details", new {id = id});
+        }
 
         //// GET: Posts/Delete/5
         //public async Task<IActionResult> Delete(int? id)
