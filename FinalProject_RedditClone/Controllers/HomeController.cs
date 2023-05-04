@@ -29,6 +29,8 @@ namespace FinalProject_RedditClone.Controllers
             model.Comments = _unitOfWork.Comment.GetAll();
 
 
+            model.Votes = _unitOfWork.Vote.GetAll();
+            
             if (String.IsNullOrEmpty(searchString))
             {
                 model.Posts = _unitOfWork.Posts.GetAll();

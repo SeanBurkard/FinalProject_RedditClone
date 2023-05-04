@@ -17,11 +17,11 @@ namespace FinalProject_RedditClone.Repositories
             if(vote.ForumId == null)
             {
                 toDelete = _context.Vote.FirstOrDefault(v => v.PostId == vote.PostId && v.UserId == vote.UserId && v.IsUpvote != vote.IsUpvote);
-            }
-            
-            if(toDelete != null)
-            {
-                _context.Vote.Remove(toDelete);
+
+                if (toDelete != null)
+                {
+                    _context.Vote.Remove(toDelete);
+                }
             }
 
             _context.Vote.Add(vote);

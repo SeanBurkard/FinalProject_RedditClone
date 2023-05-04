@@ -107,6 +107,29 @@
                                     </ul>
                                 </div>
                             </div>
+                            
+                            @if(User.Identity.IsAuthenticated)
+                            {
+                                <div class="sidebarblock">
+                                    <h3>Liked Forums</h3>
+                                    <div class="divline"></div>
+                                    <div class="blocktxt">
+                                        <ul class="cats">
+                                            @foreach (var forum in Model.Forums)
+                                            {
+                                                @foreach(var vote in Model.Votes)
+                                                {
+                                                    if (vote.ForumId == forum.Id && vote.UserId == Model.User.Id)
+                                                    {
+                                                        <li><a asp-controller="Forum" asp-action="Details" asp-route-id="@forum.Id">@forum.Title <span class="badge pull-right">20</span></a></li>
+                                                    }
+                                                }
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            }
+                            
                         </div>
                     </div>
                 </div>

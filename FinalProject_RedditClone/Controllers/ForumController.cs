@@ -99,7 +99,7 @@ namespace FinalProject_RedditClone.Controllers
                 forum.UpdatedAt = DateTime.Now;
 
                 _unitOfWork.Forum.Add(forum);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", new {id = forum.Id});
             }
             return View(forum);
         }
@@ -156,39 +156,29 @@ namespace FinalProject_RedditClone.Controllers
         }
 
         // GET: Forum/Delete/5
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(ForumDetailsVM vm)
         {
-            if (id == null || _unitOfWork.Forum == null)
-            {
-                return NotFound();
-            }
-
-            var forum = _unitOfWork.Forum.GetById(id);
-            if (forum == null)
-            {
-                return NotFound();
-            }
-
-            return View(forum);
+            _unitOfWork.Forum.Delete(_unitOfWork.Forum.GetById(vm.ForumId));
+            return RedirectToAction("Index", "Home");
         }
 
-        // POST: Forum/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_unitOfWork.Forum == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Forum'  is null.");
-            }
-            var forum =  _unitOfWork.Forum.GetById(id);
-            if (forum != null)
-            {
-                _unitOfWork.Forum.Delete(forum);
-            }
+        //// POST: Forum/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> DeleteConfirmed(int id)
+        //{
+        //    if (_unitOfWork.Forum == null)
+        //    {
+        //        return Problem("Entity set 'ApplicationDbContext.Forum'  is null.");
+        //    }
+        //    var forum =  _unitOfWork.Forum.GetById(id);
+        //    if (forum != null)
+        //    {
+        //        _unitOfWork.Forum.Delete(forum);
+        //    }
 
-            return RedirectToAction(nameof(Index));
-        }
+        //    return RedirectToAction(nameof(Index));
+        //}
 
         private bool ForumExists(int id)
         {
